@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="quality_check_view_form" model="ir.ui.view">
+        <field name="name">quality.check.view.form</field>
+        <field name="model">quality.check</field>
+        <field name="inherit_id" ref="quality_control.quality_check_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="before">
+                <field name="is_blocked" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='product_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_blocked', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='measure_on']" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_blocked', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='picking_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_blocked', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='point_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_blocked', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='test_type_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_blocked', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='team_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_blocked', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_blocked', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_blocked', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='picture']" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_blocked', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='additional_note']" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_blocked', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='qty_tested']" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_blocked', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='measure']" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_blocked', '=', True)]}</attribute>
+            </xpath>
+            <!-- <xpath expr="//field[@name='worksheet_template_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_blocked', '=', True)]}</attribute>
+            </xpath> -->
+        </field>
+    </record>
+
+</odoo>

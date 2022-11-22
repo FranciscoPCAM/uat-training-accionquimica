@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="banamex_currency_tree_view" model="ir.ui.view">
+            <field name="name">banamex.currency.tree.view</field>
+            <field name="model">banamex.currency</field>
+            <field name="arch" type="xml">
+                <tree editable="top" create="1" delete="1" multi_edit="1" string="Tipo de cambio Citibanamex">
+                    <field name="currency_id" string="Moneda" width="25%" readonly="0"/>
+                    <field name="name" string="Fecha" width="25%"/>
+                    <field name="company_rate" string="Unidad por MXN" width="25%"/>
+                    <field name="inverse_company_rate" string="MXN por unidad" width="25%"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_banamex_currency" model="ir.actions.act_window">
+            <field name="name">Tipo de cambio Citibanamex</field>
+            <field name="res_model">banamex.currency</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="banamex_currency_tree_view"/>
+        </record>
+
+        <menuitem 
+            action="action_banamex_currency" 
+            name="Tipo de cambio Citibanamex"
+            id="menu_banamex_currency" 
+            parent="account.account_account_menu" 
+            sequence="4"
+        />
+    </data>
+</odoo>

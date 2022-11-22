@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="inherit_product" inherit_id="website_sale.product">
+        <xpath expr="//p[@t-field='product.description_sale']" position="after">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="table-active">
+                        <td>Fórmula</td>
+                        <td><t t-esc="product.formula"/></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-light">
+                        <td>Estado físico</td>
+                        <td><t t-esc="product.physical_state"/></td>
+                    </tr>
+                    <tr class="table-active">
+                        <td>Apariencia</td>
+                        <td><t t-esc="product.appearance"/></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>Otros nombres</td>
+                        <td><t t-esc="product.other_name"/></td>
+                    </tr>
+                </tbody>
+            </table>
+        </xpath>
+
+        <xpath expr="//div[@id='product_full_description']" position="before">
+            <div class="container" style="border: 1px solid #c3c3c3;">
+                <div class="row">
+                    <div class="col-6" style="padding: 40px 0px 0px 40px;">
+                        <strong style="color: #3d640d">USOS</strong>
+                        <p t-field="product.use" 
+                        class="text-muted my-2"/>
+                    </div>
+                    <div class="col-6" style="padding: 40px 0px 0px 40px;">
+                        <strong style="color: #3d640d">FICHAS TÉCNICAS</strong>
+                        <p>
+                            <span>
+                                <br/>
+                                <img src='/aq_website_sale/static/src/img/vial.png' alt="vial" style="max-width: 25px"/>
+                                <a t-att-href="product.data_sheet" target="_blank">Ficha Técnica</a>
+                            </span>
+                        </p>
+                        <p>
+                            <span>
+                                <br/>
+                                <img src='/aq_website_sale/static/src/img/shield.png' alt="vial" style="max-width: 25px"/>
+                                <a t-att-href="product.safe_sheet" target="_blank">Hoja de datos de seguridad</a>
+                            </span>
+                        </p>
+                        <p>
+                            <span>
+                                <br/>
+                                <img src='/aq_website_sale/static/src/img/truck.png' alt="vial" style="max-width: 25px"/>
+                                <a t-att-href="product.transport_sheet" target="_blank">Emergencia de transportación</a>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//p[@t-field='product.description_sale']" position="replace">
+            <p t-field="product.web_description" 
+                class="text-muted my-2" 
+                placeholder="Descripción del producto."/>
+        </xpath>
+    </template>
+
+    <template id="inherit_product_price" inherit_id="website_sale.product_price">
+        <xpath expr="//div[@class='product_price d-inline-block mt-2 mb-3']" position="replace">
+            <div class="container">
+                <div class="row">
+                    <div class="col-3">
+                        <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price d-inline-block mt-2 mb-3">
+                            <h3 class="css_editable_mode_hidden">
+                                <span class="oe_price" style="white-space: nowrap;" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                <span itemprop="price" style="display:none;" t-esc="combination_info['price']"/>
+                                <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
+                                <span t-attf-class="text-danger oe_default_price ml-1 h5 {{'' if combination_info['has_discounted_price'] else 'd-none'}}" style="text-decoration: line-through; white-space: nowrap;" t-esc="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                            </h3>
+                            <h3 class="css_non_editable_mode_hidden decimal_precision" t-att-data-precision="str(website.currency_id.decimal_places)">
+                                <span t-field="product.list_price" t-options="{                    &quot;widget&quot;: &quot;monetary&quot;,                    &quot;display_currency&quot;: product.currency_id,                }"/>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <p class="text-muted my-2">Precio unitario / Kg</p>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="inherit_product_variants" inherit_id="website_sale.product_variants">
+        <xpath expr="//div[@class='mb-4']" position="after">
+                <!-- <select class="form-select" aria-label="Default select example">
+                    <t t-foreach="product.product_variant_ids" t-as="variant">
+                        <option value="variant.id"><t t-esc="variant.name"/></option>
+                    </t>
+                </select> -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <strong>Embalaje: </strong>
+                    </div>
+                    <div class="col-6">
+                        <select class="custom-select" aria-label="Default select example">
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

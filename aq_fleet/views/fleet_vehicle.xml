@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="fleet_vehicle_view_form" model="ir.ui.view">
+        <field name="name">fleet.vehicle.view.form</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='open_assignation_logs']" position="before">
+                <button name="open_picking_recs" type="object" class="oe_stat_button" icon="fa-file">
+                    <field name="picking_count" widget="statinfo" string="Pedidos"/>
+                </button>
+                <button name="cancel_picking_recs" type="object" class="oe_stat_button" icon="fa-recycle">
+                    <field name="picking_cancel_count" widget="statinfo" string="Devoluciones y Cancelaciones"/>
+                </button>
+                <button name="fuel_service_action" type="object" class="oe_stat_button" icon="fa-fa-gas-pump">
+                    <field name="fuel_count" widget="statinfo" string="Gasolina"/>
+                </button>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="l10n_mx_edi_vehicle" string="Configuración del vehículo">
+                    <group>
+                        <group>
+                            <field name="l10n_mx_edi_vehicle_id"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

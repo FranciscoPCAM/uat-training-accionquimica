@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">view.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='backorder_id']" position="after">
+                <field name="fleet_vehicle_id"/>
+                <field name="license_plate" readonly="1"/>
+                <field name="driver_id" readonly="1"/>
+                <field name="date_filter" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_form_search" model="ir.ui.view">
+        <field name="name">view.picking.form.search</field>
+        <field name="model">stock.picking</field>
+        <field name="arch" type="xml">
+            <search string="Fleet Costs Analysis">
+                <field name="state"/>
+                <group expand="0" string="Filters">
+                    <filter string="Programados para hoy" name="today_appointement"
+                        domain="[('date_filter','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59))), ('date_filter','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
+                    <filter string="Listo" name="confirmed"
+                        domain="[('state','in',['done'])]"/>
+                    <filter string="Devoluciones y Cancelaciones" name="cancel_return"
+                        domain="['|',('state','=','cancel'),('picking_type_id.name','in',('Devoluciones','Returns'))]"/>
+                    <filter string="Devoluciones" name="return"
+                        domain="[('picking_type_id.name','in',('Devoluciones','Returns'))]"/>
+                    <filter string="Cancelaciones" name="cancel"
+                        domain="[('state','=','cancel')]"/>
+                </group>
+                <!-- <group expand="0" string="Group by...">
+                    <filter string="Estatus" name="confirmed" context="{'group_by': 'state'}"/>
+               </group> -->
+            </search>
+        </field>
+    </record>
+
+    <!-- Confirmed action used for open_picking_recs smartbutton -->
+    <record id="action_picking_smart_button" model="ir.actions.act_window">
+        <field name="name">Traslados</field>
+        <field name="res_model">stock.picking</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain"></field>
+        <field name="groups_id" eval="[(6,0,[ref('base.group_system'),ref('fleet.fleet_group_user'),ref('fleet.fleet_group_user'),ref('fleet.fleet_group_manager')])]"/>
+        <field name="context">{'search_default_today_appointement': 1, 'search_default_confirmed':1}</field>
+        <field name="search_view_id" ref="view_picking_form_search"/>
+    </record>
+
+    <!-- Cancel action used for cancel_picking_recs smartbutton -->
+    <record id="action_cancel_picking_smart_button" model="ir.actions.act_window">
+        <field name="name">Traslados Cancelados</field>
+        <field name="res_model">stock.picking</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain"></field>
+        <field name="context">{'search_default_cancel_return': 1}</field>
+        <field name="search_view_id" ref="view_picking_form_search"/>
+    </record>
+
+</odoo>

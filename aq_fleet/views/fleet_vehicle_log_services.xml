@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="fleet_vehicle_log_services_view_form" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.servicesview.form</field>
+        <field name="model">fleet.vehicle.log.services</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vendor_id']" position="after">
+                <field name="is_planned"/>
+                <field name="purchase_order_id" attrs="{'invisible': [('is_planned', '=', False)]}"/>
+                <field name="expense_id" attrs="{'invisible': [('is_planned', '=', True)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--Custom search view-->
+    <record id="fleet_vehicle_log_services_search" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.services.search</field>
+        <field name="model">fleet.vehicle.log.services</field>
+        <field name="arch" type="xml">
+            <search string="Fleet Fuel service">
+                <field name="state"/>
+                <group expand="0" string="Filters">
+                    <filter string="Gasolina" name="fuel"
+                        domain="[('service_type_id.name','=','Gasolina')]"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_fuel_smart_button" model="ir.actions.act_window">
+        <field name="name">Servicio de Gasolina</field>
+        <field name="res_model">fleet.vehicle.log.services</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('service_type_id.name','=','Gasolina')]</field>
+        <field name="context">{'search_default_fuel': 1}</field>
+        <field name="search_view_id" ref="fleet_vehicle_log_services_search"/>
+    </record>
+
+</odoo>

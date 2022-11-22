@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="quality_check_view_form_inherit_worksheet" model="ir.ui.view">
+        <field name="name">quality.check.view.form.inherit.worksheet</field>
+        <field name="model">quality.check</field>
+        <field name="inherit_id" ref="quality_control_worksheet.quality_check_view_form_inherit_worksheet"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='worksheet_template_id']" position="attributes">
+                <attribute name="attrs">{'readonly': [('is_blocked', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

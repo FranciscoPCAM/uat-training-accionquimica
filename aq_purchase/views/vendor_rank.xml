@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="vendor_rank_tree_view" model="ir.ui.view">
+        <field name="name">vendor.rank.tree.view</field>
+        <field name="model">vendor.rank</field>
+        <field name="arch" type="xml">
+            <tree editable="top" create="1" delete="1" multi_edit="1" string="Clasificación de proveedor">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="action_vendor_rank" model="ir.actions.act_window">
+        <field name="name">Clasificación de proveedor</field>
+        <field name="res_model">vendor.rank</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="vendor_rank_tree_view"/>
+    </record>
+
+    <menuitem 
+        action="action_vendor_rank" 
+        name="Clasificación de proveedor"
+        id="menu_vendor_rank" 
+        parent="purchase.menu_purchase_config" 
+        sequence="3"
+        groups="base.group_system,purchase.group_purchase_manager"
+    />
+
+</odoo>

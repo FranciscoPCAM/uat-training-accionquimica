@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_valuation_layer_form" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.form</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='stock_move_id']" position="after">
+                <field name="purchase_order_id"/>
+                <field name="currency_id" invisible="0"/>
+            </xpath>
+            <xpath expr="//page[@name='valuation']" position="replace">
+                <page string="Valuation" name="valuation">
+                    <group>
+                        <section>
+                            <strong><label for="quantity"/></strong>
+                            <field name="quantity"/><br/>
+                            <strong><label for="uom_id"/></strong>
+                            <field name="uom_id" groups="uom.group_uom"/><br/>
+                            <field name="currency_id" invisible="1"/>
+                            <strong><label for="unit_cost"/></strong>
+                            <field name="unit_cost"/><br/>
+                            <strong><label for="amount_currency"/></strong>
+                            <field name="amount_currency"/>&amp;nbsp; <field name="currency_name"/><br/>
+                            <strong><label for="value"/></strong>
+                            <field name="value"/><br/>
+                            <strong><label for="total_currency"/></strong>
+                            <field name="total_currency"/>&amp;nbsp; <field name="currency_name"/><br/>
+                            <strong><label for="remaining_qty"/></strong>
+                            <field name="remaining_qty"/>
+                        </section>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_valuation_layer_tree" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.tree</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='uom_id']" position="after">
+                <field name="total_currency" optional="show"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

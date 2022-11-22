@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record model="res.groups" id="group_visualizer_user">
+            <field name="category_id" ref="base.module_category_inventory_purchase"/>
+            <field name="name">Visualizador</field>
+        </record>
+
+        <record model="ir.ui.menu" id="purchase.menu_purchase_root">
+            <field name="groups_id" eval="[(6,0,[ref('purchase.group_purchase_user'),ref('purchase.group_purchase_manager'),ref('aq_purchase.group_visualizer_user')])]"/>
+        </record>
+
+    </data>
+</odoo>

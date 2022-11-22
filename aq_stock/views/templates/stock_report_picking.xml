@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="aq_report_picking" inherit_id="stock.report_picking">
+        <xpath expr="//h1" position="before">
+            <style>
+                table.table-bordered{
+                    border:1px solid black;
+                    margin-top:10px;
+                }
+                table.table-bordered > thead > tr > th{
+                    border:1px solid black !important;
+                }
+                table.table-bordered > tbody > tr > td{
+                    border:1px solid black;
+                }
+            </style>
+            <!-- <table class="table table-sm" t-if="o.move_line_ids and o.move_ids_without_package"> -->
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <td>
+                            Alm. Embarque
+                        </td>
+                        <td>
+                            Carta Porte
+                        </td>
+                        <td>
+                            Orden de venta
+                        </td>
+                        <td>
+                            Orden de compra
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span t-field="o.location_id.display_name"/>
+                        </td>
+                        <td>
+                            Referencia de la carta porte generada (XML)
+                        </td>
+                        <td>
+                            <span t-field="o.origin"/>
+                        </td>
+                        <td>
+                            Customer_po (En el modelo de sale.order relacionado)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <td>
+                            Conductor
+                        </td>
+                        <td>
+                            ID Unidad
+                        </td>
+                        <td>
+                            Num. Placas
+                        </td>
+                        <td>
+                            Nombre del operador
+                        </td>
+                        <td>
+                            Entrega
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            transport_id
+                        </td>
+                        <td>
+                            Internal ID de la unidad relacionada de fleet.vehicle
+                        </td>
+                        <td>
+                            license_plate
+                        </td>
+                        <td>
+                            driver_id
+                        </td>
+                        <td>
+                            Scheduled_date
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <td>
+                            Peso Tara
+                        </td>
+                        <td>
+                            Pero Bruto
+                        </td>
+                        <td>
+                            Peso Neto
+                        </td>
+                        <td>
+                            Fecha
+                        </td>
+                        <td>
+                            Hora de salida
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Del modelo de pesajes
+                        </td>
+                        <td>
+                            Del modelo de pesajes
+                        </td>
+                        <td>
+                            Del modelo de pesajes
+                        </td>
+                        <td>
+                            Del modelo de pesajes
+                        </td>
+                        <td>
+                            Del modelo de pesajes
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </xpath>
+        <xpath expr="//p[@t-field='o.note']" position="after">
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <td>
+                            Firma de embarques
+                        </td>
+                        <td>
+                            Firma del operador
+                        </td>
+                        <td>
+                            Fecha y hora de recepción
+                        </td>
+                        <td>
+                            Recibí de conformidad Nombre y Firma
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                        <br/><br/><br/>
+                        </td>
+                        <td>
+                        <br/><br/><br/>
+                        </td>
+                        <td>
+                        <br/><br/><br/>
+                        </td>
+                        <td>
+                        <br/><br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_move_form_inherit" model="ir.ui.view">
+        <field name="name">view.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group//group[@id='header_right_group']" position="inside">
+                <field name="related_currency_id" invisible="1"/>
+                <field name="banamex_currency_id" attrs="{'invisible': ['|',('payment_state', '=', 'paid'), ('related_currency_id', '=', 33)]}"/>
+                <field name="banamex_historic_currency_id" attrs="{'invisible': ['|',('payment_state', '!=', 'paid'), ('related_currency_id', '=', 33)]}"/>
+                <field name="is_scale" invisible="0"/>
+                <field name="is_sale_order" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='tax_totals_json']" position="after">
+                <field name="amount_total_banamex" attrs="{'invisible': [('related_currency_id', '=', 33)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree" position="inside">
+                <field name="is_scale" invisible="0"/>
+                <field name="is_sale_order" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']" position="attributes">
+                <attribute name="attrs">{'readonly': ['&amp;',('is_scale', '=', True),('is_sale_order', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_uom_id']" position="attributes">
+                <attribute name="readonly">1</attribute>
+                <attribute name="force_save">1</attribute>
+                <attribute name="groups">aq_account_group.group_account_concil,account.group_account_invoice,account.group_account_readonly</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/form/sheet/group/field[@name='product_uom_id']" position="attributes">
+                <attribute name="readonly">1</attribute>
+                <attribute name="force_save">1</attribute>
+                <attribute name="groups">aq_account_group.group_account_concil,account.group_account_invoice,account.group_account_readonly</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/kanban/field[@name='product_uom_id']" position="attributes">
+                <attribute name="readonly">1</attribute>
+                <attribute name="force_save">1</attribute>
+                <attribute name="groups">aq_account_group.group_account_concil,account.group_account_invoice,account.group_account_readonly</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_uom_id']" position="after">
+                <field name="product_uom_id" groups="account.group_account_manager"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/form/sheet/group/field[@name='product_uom_id']" position="after">
+                <field name="product_uom_id" groups="account.group_account_manager"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/kanban/field[@name='product_uom_id']" position="after">
+                <field name="product_uom_id" groups="account.group_account_manager"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

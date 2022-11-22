@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--New restrict access for general customer view-->
+    <record id="action_partner_customer" model="ir.actions.act_window">
+        <field name="name">Clientes</field>
+        <field name="res_model">res.partner</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('customer_rank', '!=', 0)]</field>
+        <field name="context">{'create': False,'edit': False,'delete': False,'duplicate': False}</field>
+        <field name="search_view_id" ref="base.res_partner_kanban_view"/>
+    </record>
+
+    <menuitem 
+        action="action_partner_customer" 
+        name="Clientes"
+        id="menu_partner_customer" 
+        parent="sale.sale_order_menu" 
+        sequence="5"
+        groups="base.group_system,sales_team.group_sale_manager,sales_team.group_sale_salesman,sales_team.group_sale_salesman_all_leads"
+    />
+
+    <!--New restrict access for capturista view-->
+    <record id="action_partner_capturista" model="ir.actions.act_window">
+        <field name="name">Clientes</field>
+        <field name="res_model">res.partner</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('customer_rank', '!=', 0)]</field>
+        <field name="search_view_id" ref="base.res_partner_kanban_view"/>
+    </record>
+
+    <menuitem 
+        action="action_partner_capturista" 
+        name="Clientes"
+        id="menu_partner_capturista" 
+        parent="sale.sale_order_menu" 
+        sequence="6"
+        groups="aq_sale.group_capturista_user"
+    />
+
+    <!--Hide base menu-->
+    <record model="ir.ui.menu" id="sale.res_partner_menu">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+    </record>
+    <record model="ir.ui.menu" id="account.menu_account_customer">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+    </record>
+    <record model="ir.ui.menu" id="crm.res_partner_menu_customer">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+    </record>
+    <record model="ir.ui.menu" id="website_sale.menu_orders_customers">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+    </record>
+    <record model="ir.ui.menu" id="contacts.res_partner_menu_contacts">
+        <field name="groups_id" eval="[(6,0,[ref('aq_sale.group_capturista_user')])]"/>
+    </record>
+
+</odoo>

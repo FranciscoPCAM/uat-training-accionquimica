@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">view.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="customer_rank" required="1" invisible="0"/>
+                <field name="supplier_rank" required="1" invisible="0"/>
+                <field name="customer_class" 
+                attrs="{'invisible': [('customer_rank', '!=', 1)]}"/>
+            </xpath>
+
+            <xpath expr="//group[@name='sale']" position="inside">
+                <field name="product_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_stock_form" model="ir.ui.view">
+        <field name="name">view.partner.stock.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="stock.view_partner_stock_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='container_row_stock']" position="after">
+                <group name="general_debt">
+                    <group string="Límites de deuda" name="debt_limit_r" colspan="2">
+                    <div>
+                        <label for="max_debt"/>
+                        <field name="max_debt" style="width:20%"/><span> $</span><br/>
+                        <label for="days_limit_debt"/>
+                        <field name="days_limit_debt" style="width:20%"/><span> días</span>
+                    </div>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_property_form" model="ir.ui.view">
+        <field name="name">view.partner.property.formt</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="product.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='property_product_pricelist']" position="after">
+                <field name="custom_product_pricelist" string="Lista de precios" widget="many2many_tags"/>
+            </xpath>
+            <xpath expr="//field[@name='property_product_pricelist']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!--New restrict access for general contact view-->
+    <record id="action_partner_contact" model="ir.actions.act_window">
+        <field name="name">Contactos</field>
+        <field name="res_model">res.partner</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">kanban,tree,form,activity</field>
+        <field name="context">{'create': False,'edit': False,'delete': False,'duplicate': False,'default_is_company': True}</field>
+        <field name="search_view_id" ref="base.res_partner_kanban_view"/>
+    </record>
+
+    <menuitem 
+        action="action_partner_contact" 
+        name="Contactos"
+        id="menu_partner_contact" 
+        parent="contacts.menu_contacts" 
+        sequence="1"
+        groups="base.group_system,account.group_account_manager,aq_account_group.group_account_concil,account.group_account_invoice,account.group_account_invoice,account.group_account_readonly,hr.group_hr_manager,hr.group_hr_user,hr_contract.group_hr_contract_manager,base.group_erp_manager,stock.group_stock_manager,aq_stock.group_stock_user_readonly,stock.group_stock_user"
+    />
+
+</odoo>

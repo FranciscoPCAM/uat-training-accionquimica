@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Base stock menu-->
+    <menuitem name="Inventory" id="stock.menu_stock_root" 
+        sequence="140"
+        groups="stock.group_stock_manager,stock.group_stock_user,aq_storer.group_storer_user,aq_stock.group_stock_user_readonly"
+        web_icon="stock,static/description/icon.png"/>
+
+    <menuitem id="stock.all_picking"
+        name="Transferencias"
+        parent="stock.menu_stock_warehouse_mgmt"
+        sequence="5"
+        action="stock.action_picking_tree_all"
+        groups="stock.group_stock_manager,stock.group_stock_user,aq_stock.group_stock_user_readonly"/>
+        
+    <!-- <menuitem id="stock.stock_move_menu"
+        action="stock.stock_move_action"
+        name="Movimientos de existencias" 
+        parent="stock.menu_warehouse_report" 
+        sequence="140"
+        groups="base.group_no_one,aq_stock.group_stock_user_readonly"/> -->
+
+    <menuitem id="stock.menu_warehouse_report"
+        name="Reportes" 
+        parent="stock.menu_stock_root" 
+        sequence="99"
+        groups="stock.group_stock_manager,aq_stock.group_stock_user_readonly"/>
+
+</odoo>

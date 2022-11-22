@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_equipment_request_view_form" model="ir.ui.view">
+        <field name="name">hr.equipment.request.view.form</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='archive_equipment_request']" position="after">
+                <field name="consumable_visibility" invisible="1"/>
+                <field name="consumable_used" invisible="1"/>
+                <button class="btn btn-primary" string="Usar consumibles" name="run_stock_quant" type="object" attrs="{'invisible': ['|',('consumable_visibility', '=', True),('consumable_used','=',True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page name="description" string="Descripción">
+                        <group name="main_desc">
+                            <group name="inter_desc">
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page name="consumables" string="Consumibles">
+                        <group name="main_consu">
+                            <group name="inter_consu">
+                                <field name="consumable_ids"
+                                 context="{'default_maintenance_id': active_id}"
+                                 nolabel="1"
+                                 attrs="{'readonly': ['|',('consumable_visibility', '=', True),('consumable_used','=',True)]}">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="qty" string="Por consumir"/>
+                                        <field name="product_uom_id" string="Udm"/>
+                                        <field name="location_id"/>
+                                        <field name="maintenance_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

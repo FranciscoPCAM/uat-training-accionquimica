@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_template_form_view" model="ir.ui.view">
+        <field name="name">product.template.form.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="main_currency_id"/>
+            </xpath>
+            <xpath expr="//field[@name='uom_po_id']" position="after">
+                <field name="create_date" string="Fecha de Alta" required="1" readonly="1"/>
+                <field name="create_uid" string="Creado por" required="1" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_form_view_inherit_website_sale_stock" model="ir.ui.view">
+        <field name="name">product.template.form.view.inherit.website.sale.stock</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="website_sale_stock.product_template_form_view_inherit_website_sale_stock"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='out_of_stock_message']" position="after">
+                <field name="data_sheet" widget="url"/>
+                <field name="safe_sheet" widget="url"/>
+                <field name="transport_sheet" widget="url"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Sitio web" name="website">
+                    <group>
+                        <group name="website_general_group">
+                            <field name="formula"/>
+                            <field name="physical_state"/>
+                            <field name="appearance"/>
+                            <field name="other_name"/>
+                            <field name="use"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="website_group">
+                            <field name="web_description"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

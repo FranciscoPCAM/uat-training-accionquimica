@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase_order_form" model="ir.ui.view">
+        <field name="name">purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="confidential_vendor" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="partner_button" invisible="1"/>
+                <label for="partner_button" groups="aq_purchase.group_visualizer_user"/>
+                <button name="partner_button_action" type="object" groups="aq_purchase.group_visualizer_user">
+                    <field name="partner_button"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="groups">purchase.group_purchase_user,purchase.group_purchase_manager,base.group_system</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/group/group/div/field[@name='product_uom']" position="attributes">
+                <attribute name="readonly">1</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/kanban/field[@name='product_uom']" position="attributes">
+                <attribute name="readonly">1</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!--New restrict access for visualizer supplier view-->
+    <record id="action_visualizer_supplier_rfq" model="ir.actions.act_window">
+        <field name="name">Solicitudes de cotización</field>
+        <field name="res_model">purchase.order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
+        <field name="domain">[('confidential_vendor', '!=', True)]</field>
+        <field name="context">{'create': False,'edit': False,'delete': False,'duplicate': False,'quotation_only': True}</field>
+        <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="view_id" ref="purchase.purchase_order_kpis_tree"/>
+    </record>
+
+    <menuitem 
+        action="action_visualizer_supplier_rfq" 
+        name="Solicitudes de cotización"
+        id="menu_visualizer_supplier_rfq" 
+        parent="purchase.menu_procurement_management" 
+        sequence="0"
+        groups="aq_purchase.group_visualizer_user"
+    />
+
+    <!--New restrict access for visualizer supplier view-->
+    <record id="action_visualizer_supplier_po" model="ir.actions.act_window">
+        <field name="name">Órdenes de compra</field>
+        <field name="res_model">purchase.order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
+        <field name="domain">[('confidential_vendor', '!=', True),('state','in',('purchase', 'done'))]</field>
+        <field name="context">{'create': False,'edit': False,'delete': False,'duplicate': False,'quotation_only': True}</field>
+        <field name="search_view_id" ref="purchase.purchase_order_view_search"/>
+        <field name="view_id" ref="purchase.purchase_order_view_tree"/>
+    </record>
+
+    <menuitem 
+        action="action_visualizer_supplier_po" 
+        name="Órdenes de compra"
+        id="menu_visualizer_supplier_po" 
+        parent="purchase.menu_procurement_management" 
+        sequence="0"
+        groups="aq_purchase.group_visualizer_user"
+    />
+
+    <!--Hide base menu-->
+    <record model="ir.ui.menu" id="purchase.menu_purchase_rfq">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_system'),ref('purchase.group_purchase_manager'),ref('purchase.group_purchase_user')])]"/>
+    </record>
+    <record model="ir.ui.menu" id="account.menu_account_supplier">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_system'),ref('purchase.group_purchase_manager'),ref('purchase.group_purchase_user')])]"/>
+    </record>
+
+</odoo>

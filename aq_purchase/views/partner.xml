@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_custom_form" model="ir.ui.view">
+        <field name="name">view.partner.custom.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="aq_partner.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='customer_class']" position="after">
+                <field name="vendor_rank_ids" 
+                attrs="{'invisible': [('supplier_rank', '!=', 1)]}"
+                widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_property_form" model="ir.ui.view">
+        <field name="name">view.partner.property.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="purchase.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='property_purchase_currency_id']" position="after">
+                <field name="confidential_vendor"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--New restrict access for general supplier view-->
+    <record id="action_partner_supplier" model="ir.actions.act_window">
+        <field name="name">Proveedores</field>
+        <field name="res_model">res.partner</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('supplier_rank', '!=', 0)]</field>
+        <field name="search_view_id" ref="base.res_partner_kanban_view"/>
+    </record>
+
+    <menuitem 
+        action="action_partner_supplier" 
+        name="Proveedores"
+        id="menu_partner_supplier" 
+        parent="purchase.menu_procurement_management" 
+        sequence="16"
+        groups="base.group_system,purchase.group_purchase_manager,purchase.group_purchase_user"
+    />
+
+    <!--New restrict access for visualizer supplier view-->
+    <record id="action_visualizer_supplier" model="ir.actions.act_window">
+        <field name="name">Proveedores</field>
+        <field name="res_model">res.partner</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">['&amp;',('supplier_rank', '!=', 0),('confidential_vendor', '!=', True)]</field>
+        <field name="context">{'create': False,'edit': False,'delete': False,'duplicate': False}</field>
+        <field name="search_view_id" ref="base.res_partner_kanban_view"/>
+    </record>
+
+    <menuitem 
+        action="action_visualizer_supplier" 
+        name="Proveedores"
+        id="menu_visualizer_supplier" 
+        parent="purchase.menu_procurement_management" 
+        sequence="17"
+        groups="aq_purchase.group_visualizer_user"
+    />
+
+    <!--Hide base menu-->
+    <record model="ir.ui.menu" id="purchase.menu_procurement_management_supplier_name">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+    </record>
+    <record model="ir.ui.menu" id="account.menu_account_supplier">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+    </record>
+
+</odoo>

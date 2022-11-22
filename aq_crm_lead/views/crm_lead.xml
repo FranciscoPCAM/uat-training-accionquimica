@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="crm_lead_view_form" model="ir.ui.view">
+        <field name="name">crm.lead.view.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="before">
+                <field name="vat"/>
+                <field name="customer_class"/>
+            </xpath>
+            <xpath expr="//group[@name='lead_priority']/field[@name='tag_ids']" position="before">
+                <field name="vat"/>
+                <field name="customer_class"/>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="product_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+            </xpath>
+            <xpath expr="//group[@name='lead_priority']/field[@name='tag_ids']" position="after">
+                <field name="product_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+            </xpath>
+            <xpath expr="//field[@name='type']" position="after">
+                <field name="type_lead"/>
+            </xpath>
+            <!-- <xpath expr="//field[@name='source_id']" position="attributes"> -->
+            <xpath expr="//page[@name='extra']/group/group/field[@name='source_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group/group/field[@name='source_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='extra']/group/group/field[@name='source_id']" position="after">
+                <field name="bank_ids">
+                    <tree>
+                        <field name="bank_id"/>
+                        <field name="acc_number"/>
+                    </tree>
+                </field>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group/group/field[@name='source_id']" position="after">
+                <field name="bank_ids">
+                    <tree>
+                        <field name="bank_id"/>
+                        <field name="acc_number"/>
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

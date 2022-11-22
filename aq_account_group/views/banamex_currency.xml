@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem 
+            name="Configuración"
+            id="main_config_concil_access" 
+            parent="account_accountant.menu_accounting"
+            sequence="40"
+            groups="aq_account_group.group_account_concil"
+        />
+
+        <menuitem 
+            action="aq_account.action_banamex_currency" 
+            name="Tipo de cambio Citibanamex"
+            id="menu_banamex_currency_concil_access" 
+            parent="main_config_concil_access" 
+            sequence="10"
+        />
+    </data>
+</odoo>
